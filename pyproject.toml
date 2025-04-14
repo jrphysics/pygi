@@ -6,7 +6,7 @@ authors = [
     {name = "jrphysics",email = "jrphysics@protonmail.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.10"
 dependencies = [
     "streamlit (>=1.44.1,<2.0.0)"
 ]
