@@ -80,3 +80,29 @@ def caustic(w0, z, wavelength, m2):
     # Workaround for numpy array to work with to_compact()
     wz_array.ito(wz_array[0].to_compact().units)
     return z_array, wz_array
+
+
+def pulse_avg_power(pulse_energy, pulse_frequency):
+    """
+    Calculate the average power of a pulsed laser.
+
+    :param float pulse_energy: Energy per pulse.
+    :param float pulse_frequency: Pulse frequency.
+    :return: Average power.
+    :rtype: float
+    """
+    avg_power = pulse_energy * pulse_frequency
+    return avg_power
+
+
+def pulse_peak_power(pulse_energy, pulse_duration):
+    """
+    Calculate the peak power of a pulsed laser.
+
+    :param float pulse_energy: Energy per pulse.
+    :param float pulse_duration: Pulse duration.
+    :return: Peak power.
+    :rtype: float
+    """
+    peak_power = pulse_energy / pulse_duration
+    return peak_power

@@ -2,12 +2,12 @@
 """
 import pandas as pd
 import streamlit as st
-from pint import UnitRegistry
 from pygi import physics as ph
-ul = ph.unit_list
+from pygi.dashboard import ureg
+from pygi.helpers import add_equation
 
 # Config
-
+st.set_page_config(page_title="Gaussian Beam Calculator")
 
 # CSS
 st.write('''<style>
@@ -20,8 +20,7 @@ st.write('''<style>
 </style>''', unsafe_allow_html=True)
 
 # Defaults
-ureg = UnitRegistry()
-ureg.formatter.default_format = '~'
+ul = ph.unit_list
 input_values = {'w0': 50.0 * ureg('um'),
                 'wz': 2.0 * ureg('mm'),
                 'wvl': 532.0 * ureg('nm'),
@@ -30,8 +29,8 @@ input_values = {'w0': 50.0 * ureg('um'),
                 'm2': 1.0 * ureg('')}
 
 # Session state
-if 'initialized' not in st.session_state:
-    st.session_state['initialized'] = True
+if 'initialized_gaussian' not in st.session_state:
+    st.session_state['initialized_gaussian'] = True
 
     st.session_state['submitted_free_space'] = False
     st.session_state['submitted_lens_focus'] = False
@@ -41,11 +40,10 @@ if 'initialized' not in st.session_state:
 
 
 def main():
-    """Main function to run the Streamlit app
+    """Main function to run the Streamlit page
 
     Shows Gaussian propagation and focusing calculator.
     """
-    st.title('Gaussian Beam Calculator')
 
     tab1, tab2 = st.tabs(['Free space propagation', 'Lens focusing'])
 
@@ -142,15 +140,6 @@ def form_lens_focus():
             st.metric(label='Focused beam radius', value=f'{focus_radius.to_compact():.2f~P}')
 
 
-def add_equation(equation):
-    """Add equation to the app.
-
-    :param str equation: Equation to add.
-    """
-    with st.expander('Equation', expanded=False):
-        st.latex(equation)
-
-
 def add_plot(x, y, xlabel=None, ylabel=None):
     """Add plot to the app.
 
@@ -187,5 +176,4 @@ def update_session_state(key_values):
         st.session_state[arg] = st.session_state[arg + suffix] * st.session_state[arg].units
 
 
-if __name__ == "__main__":
-    main()
+main()
