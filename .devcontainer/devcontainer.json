@@ -6,7 +6,7 @@
     "codespaces": {
       "openFiles": [
         "README.md",
-        "src/pygi/app.py"
+        "src/pygi/dashboard.py"
       ]
     },
     "vscode": {
